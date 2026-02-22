@@ -4,16 +4,38 @@ namespace LABOOP_1.Control
 {
     internal class Manager
     {
+        readonly Queue<Order> _orders = new Queue<Order>();
+
         public Manager() { }
 
-        public Order GetCurrentOrder(Queue<Order> orders)
+        public void AddOrder(Order order)
         {
-            if (orders.Count == 0)
+            _orders.Enqueue(order);
+        }
+
+        public void AddOrder(string companyName, uint amountOfdDetails, uint payment)
+        {
+            _orders.Enqueue(new Order(companyName, amountOfdDetails, payment));
+        }
+
+        public uint GetCurrentOrderRequirments()
+        {
+            if (_orders.Count == 0)
             {
                 throw new Exception("No orders");
             }
             
-            return orders.Peek();
+            return _orders.Peek().AmountOfDetails;
+        }
+
+        public uint CompleteOrder()
+        {
+            if (_orders.Count == 0)
+            {
+                throw new Exception("No orders");
+            }
+
+            return _orders.Dequeue().Payment;
         }
 
         public void CheckWorkerInBrigade(uint workerId, List<Brigade> brigades)
