@@ -16,11 +16,11 @@ namespace LABOOP_1.Core
         readonly List<Brigade> _brigades = new List<Brigade>();
         readonly List<Machine> _machines = new List<Machine>();
 
-        public Factory(string name, uint budget, Material material, uint maxMaterial,Detail detail, uint maxDetail)
+        public Factory(string name, uint budget, uint maxStorageVolume)
         {
             _name = name;
             _accountant = new Accountant(budget);
-            _storage = new Storage(maxMaterial, maxDetail, new Material(material), new Detail(detail));
+            _storage = new Storage(maxStorageVolume);
             _manager = new Manager();
             _regulator = new Regulator();
         }
@@ -62,16 +62,16 @@ namespace LABOOP_1.Core
         {
             _manager.AddOrder(order);
         }
-        public void AddOrder(string companyName, uint amountOfdDetails, uint payment)
+        public void AddOrder(string companyName, uint amountOfdDetails, Detail detail, uint payment)
         {
-            _manager.AddOrder(companyName, amountOfdDetails, payment);
+            _manager.AddOrder(companyName, amountOfdDetails, detail, payment);
         }
 
         public void CompleteOrder()
         { 
-            uint rquiredDetails = _manager.GetCurrentOrderRequirments();
+            (uint rquiredDetails, Detail detail) = _manager.GetCurrentOrderRequirments();
            
-            _storage.TakeDetail(rquiredDetails);
+            _storage.TakeItem(rquiredDetails, detail);
             var payment = _manager.CompleteOrder();
             _accountant.AddMoney(payment);
         }
@@ -80,12 +80,12 @@ namespace LABOOP_1.Core
             var worker = _regulator.GetEntityById<Worker>(workerId, _workers);
             var brigade = _regulator.GetEntityById<Brigade>(brigadeId, _brigades);
 
-            _manager.CheckWorkerInBrigade(workerId, _brigades);
+            CheckWorkerInBrigade(workerId);
 
             brigade.AddWorker(worker);
 
         }
-        public void ProduceDetails(uint amountOfDetails)
+        public void ProduceDetails(uint amountOfDetails, Detail detail, Material material)
         {
             var brigade = _regulator.ChooseEntityFromCollection<Brigade>(_brigades);
             var machine = _regulator.ChooseEntityFromCollection<Machine>(_machines);
@@ -94,22 +94,67 @@ namespace LABOOP_1.Core
             machine.ProduceDetails(amountOfDetails,out hours, out amountOfMaterials);
             var cost = brigade.CostOfBrigadesWork(hours);
 
-            _manager.CheckProduction(amountOfDetails, cost, amountOfMaterials, _storage, _accountant);
+            CheckProduction(amountOfDetails, detail, cost, amountOfMaterials, material);
 
             _accountant.GetMoney(cost);
-            _storage.TakeMaterila(amountOfMaterials);
-            _storage.AddDetail(amountOfDetails);
+            _storage.TakeItem(amountOfMaterials, material);
+            _storage.AddItem(amountOfDetails, detail);
         }
 
-        public void BuyMaterial(uint amountOfMaterial) 
+        public void BuyMaterial(uint amountOfMaterial, Material material) 
         {
-            var cost = _storage.GetMaterialCost(amountOfMaterial);
-            _manager.CheckMaterialPurchase(amountOfMaterial, cost, _storage, _accountant);
+            var cost = material.Cost * amountOfMaterial;
+            CheckMaterialPurchase(amountOfMaterial, material, cost);
 
-            _storage.AddMaterial(amountOfMaterial);
+            _storage.AddItem(amountOfMaterial, material);
             _accountant.GetMoney(cost);
         }
 
-        public string Name => _name;         
+        public string Name => _name;
+
+        void CheckWorkerInBrigade(uint workerId)
+        {
+            foreach (var brigade in _brigades)
+            {
+                foreach (var workers in brigade.Workers)
+                {
+                    if (workers.Id == workerId)
+                    {
+                        throw new Exception("Worker is already in some Brigade");
+                    }
+                }
+            }
+        }
+
+        void CheckProduction(uint amountOfDetails, Detail detail, uint cost, uint amountOfMaterials, Material material)
+        {
+            if (!_storage.IsFittingItem(amountOfDetails, detail))
+            {
+                throw new Exception("Details Not Fitting");
+            }
+
+            if (!_storage.IsItemEnough(amountOfMaterials, material))
+            {
+                throw new Exception("Not enough material");
+            }
+
+            if (!_accountant.IsMoneyEnough(cost))
+            {
+                throw new Exception("Not enought money");
+            }
+        }
+
+        void CheckMaterialPurchase(uint amountOfMaterial, Material material, uint cost)
+        {
+            if (!_storage.IsFittingItem(amountOfMaterial, material))
+            {
+                throw new Exception("Material Not Fitting");
+            }
+
+            if (!_accountant.IsMoneyEnough(cost))
+            {
+                throw new Exception("Not enought money");
+            }
+        }
     }
 }

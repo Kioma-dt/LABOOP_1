@@ -1,6 +1,7 @@
-﻿namespace LABOOP_1.Domain
+﻿using LABOOP_1.Interface;
+namespace LABOOP_1.Domain
 {
-    internal class Detail
+    internal abstract class Detail : IStorable
     {
         string _name;
         uint _volume;
@@ -19,5 +20,27 @@
 
         public string Name => _name;
         public uint Volume => _volume;
+    }
+
+    internal class Pipe : Detail
+    {
+        public Pipe()
+            :base("Pipe", 10)
+        { }
+
+        public Pipe(Pipe other)
+            :base(other)
+        { }
+    }
+
+    internal class Block : Detail
+    {
+        public Block()
+            : base("Block", 10)
+        { }
+
+        public Block(Block other)
+            : base(other)
+        { }
     }
 }

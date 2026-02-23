@@ -1,89 +1,60 @@
 ﻿using LABOOP_1.Domain;
+using LABOOP_1.Interface;
+using System.Runtime.CompilerServices;
 
 namespace LABOOP_1.Control
 {
     internal class Storage
     {
-        uint _maxMaterialsVolume;
-        uint _maxDetailsVolume;
-        uint _amountOfMaterials;
-        uint _amountOfDetails;
+        uint _maxVolume;
+        uint _occupiedVolume;
+        Dictionary<string, uint> _items = new Dictionary<string, uint>();
 
-        Material _material;
-        Detail _detail;
-
-        public Storage(uint  maxMaterialsVolume, uint maxDetailsVolume, Material material, Detail detail)
+        public Storage(uint  maxVolume)
         {
-            _maxMaterialsVolume = maxMaterialsVolume;
-            _maxDetailsVolume = maxDetailsVolume;
-            _material = material;
-            _detail = detail;
+            _maxVolume = maxVolume;
+            _occupiedVolume = 0;
         }
 
-        public void AddMaterial(uint amount)
+        public void AddItem(uint amount, IStorable item)
         {
-            if (amount * _material.Volume > FreeVolumeForMaterial)
+            if (amount * item.Volume > FreeVolume)
             {
-                throw new Exception("Not enought space for material");
+                throw new Exception("Not enought space");
             }
 
-            _amountOfMaterials += amount;
-        }
-
-        public void TakeMaterila(uint amount)
-        {
-            if(amount > _amountOfMaterials)
+            if (_items.ContainsKey(item.Name))
             {
-                throw new Exception("Not enought material");
+                _items[item.Name] += amount;
+            }
+            else
+            {
+                _items[item.Name] = amount;
             }
 
-            _amountOfMaterials -= amount;
+            _occupiedVolume += amount * item.Volume;
         }
 
-        public uint GetMaterialCost(uint amount)
+        public void TakeItem(uint amount, IStorable item)
         {
-            return amount * _material.Cost;
-        }
-
-        public void AddDetail(uint amount)
-        {
-            if (amount * _detail.Volume > FreeVolumeForDetail)
+            if((!_items.ContainsKey(item.Name)) || (_items[item.Name] < amount))
             {
-                throw new Exception("Not enought space for detail");
+                throw new Exception("Not enought items");
             }
 
-            _amountOfDetails += amount;
+            _items[item.Name] -= amount;
+        }    
+
+        public bool IsFittingItem(uint amount, IStorable item)
+        {
+            return FreeVolume >= amount * item.Volume;
+        }
+       
+        public bool IsItemEnough(uint amount, IStorable item)
+        {
+            return (_items.ContainsKey(item.Name)) && (_items[item.Name] >= amount); 
         }
 
-        public void TakeDetail(uint amount)
-        {
-            if (amount > _amountOfDetails)
-            {
-                throw new Exception("Not enought detail");
-            }
-
-            _amountOfDetails -= amount;
-        }
-
-        public bool IsFittingMaterial(uint amountOfMaterial)
-        {
-            return FreeVolumeForMaterial >= amountOfMaterial * _material.Volume;
-        }
-
-        public bool IsFittingDetail(uint amountOfDetail)
-        {
-            return FreeVolumeForDetail >= amountOfDetail * _detail.Volume;
-        }
-
-        public bool IsMaterialEnough(uint amountOfMaterial)
-        {
-            return _amountOfMaterials >= amountOfMaterial; 
-        }
-        public bool IsDetailEnough(uint amountOfDetail)
-        {
-            return _amountOfDetails >= amountOfDetail;
-        }
-        private uint FreeVolumeForMaterial => _maxMaterialsVolume - _amountOfMaterials * _material.Volume;
-        private uint FreeVolumeForDetail => _maxDetailsVolume - _amountOfDetails * _detail.Volume;
+        private uint FreeVolume => _maxVolume - _occupiedVolume;
     }
 }
