@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="LABOOP_1.Domain.Brigade" BaseTypeListCollapsed="true">
+    <Position X="5" Y="1" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AEACIAAAAAAAAAAAAABAQAQQAQAAAAAAAAAgAACAAAA=</HashCode>
+      <FileName>Domain\Brigade.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="_workers" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="LABOOP_1.Domain.Detail" Collapsed="true">
+    <Position X="17.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAAAAAAAAAAQAAAAAAAAAAAIAAACAAAA=</HashCode>
+      <FileName>Domain\Detail.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="LABOOP_1.Domain.Pipe">
+    <Position X="15.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Domain\Detail.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LABOOP_1.Domain.Block">
+    <Position X="18.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Domain\Detail.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LABOOP_1.Domain.Machine">
+    <Position X="2" Y="3.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAACAAABAAAAAAAAAgBgQAAAAQAAACAAAAgAAAAAAAA=</HashCode>
+      <FileName>Domain\Machine.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="LABOOP_1.Domain.AutomatedMachine">
+    <Position X="4.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAABAAAAAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Domain\Machine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LABOOP_1.Domain.Material">
+    <Position X="20.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAACAAAAAAAAAAABQAAAAAAAAAAAIAAACAAAA=</HashCode>
+      <FileName>Domain\Material.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="LABOOP_1.Domain.Steel">
+    <Position X="22.25" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAABAAAAAACAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Domain\Material.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LABOOP_1.Domain.Iron">
+    <Position X="18.25" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Domain\Material.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LABOOP_1.Domain.Order">
+    <Position X="19" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAQAAAAAAAIIoAAAAAAAAEAAAAABAAAAAAAAA=</HashCode>
+      <FileName>Domain\Order.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_reqiredDetail" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="LABOOP_1.Domain.Worker" BaseTypeListCollapsed="true">
+    <Position X="7.75" Y="1.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAECAEAAAAAAAIBAAAFAQAAAAAAAAAAAAAAAAAAAAEg=</HashCode>
+      <FileName>Domain\Worker.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="LABOOP_1.Core.Factory">
+    <Position X="10.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAEDIAAoUQAABAAAAAAAAQQQAwAgAAECAAAAEAAAgQA=</HashCode>
+      <FileName>Core\Factory.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_accountant" />
+      <Field Name="_manager" />
+      <Field Name="_regulator" />
+      <Field Name="_storage" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="_brigades" />
+      <Field Name="_machines" />
+      <Field Name="_workers" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="LABOOP_1.Control.Accountant">
+    <Position X="13.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAACAAAAAAAAAAAAFAAAAAAAA=</HashCode>
+      <FileName>Control\Accountant.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LABOOP_1.Control.Manager">
+    <Position X="15.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAEAAAAAAAAAAAAAACAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Control\Manager.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="_orders" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="LABOOP_1.Control.Regulator">
+    <Position X="11.75" Y="8.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AACAAIAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Control\Regulator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LABOOP_1.Control.Storage">
+    <Position X="13" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAEAAAAIAAAAIAAAAgBABCAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Control\Storage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="LABOOP_1.Interface.IEntity">
+    <Position X="0.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interface\IEntity.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="LABOOP_1.Interface.IStorable">
+    <Position X="2.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>Interface\IStorable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
